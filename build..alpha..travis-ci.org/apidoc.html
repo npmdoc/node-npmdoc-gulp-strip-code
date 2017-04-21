@@ -1,0 +1,133 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/massick/gulp-strip-code"
+
+    >gulp-strip-code (v0.1.4)</a>
+</h1>
+<h4>A gulp plugin to remove parts of code based on regular expressions.</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.gulp-strip-code">module gulp-strip-code</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-strip-code.gulp-strip-code">
+            function <span class="apidocSignatureSpan"></span>gulp-strip-code
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.gulp-strip-code" id="apidoc.module.gulp-strip-code">module gulp-strip-code</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-strip-code.gulp-strip-code" id="apidoc.element.gulp-strip-code.gulp-strip-code">
+        function <span class="apidocSignatureSpan"></span>gulp-strip-code
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">gulp-strip-code = function (options) {
+    var doStrip = function (file, callback) {
+        var isStream = file.contents &#x26;&#x26; typeof file.contents.on === &#x27;function&#x27; &#x26;&#x26; typeof file.contents.pipe === &#x27;function&#x27;;
+        var isBuffer = file.contents instanceof Buffer;
+
+        if (typeof options === &#x27;undefined&#x27;) {
+            options = {};
+        };
+        options.start_comment = (typeof options.start_comment === &#x27;undefined&#x27;) ? &#x27;test-code&#x27; : options.start_comment;
+        options.end_comment = (typeof options.end_comment === &#x27;undefined&#x27;) ? &#x27;end-test-code&#x27; : options.end_comment;
+        options.keep_comments = typeof options.keep_comments === &#x27;undefined&#x27; ? false : options.keep_comments;
+
+        var pattern = options.pattern || new RegExp(&#x22;([\\t ]*\\/\\* ?&#x22; + options.start_comment + &#x22; ?\\*\\/)[\\s\\S]*?(\\/\\* ?&#x22; +
+options.end_comment + &#x22; ?\\*\\/[\\t ]*\\n?)&#x22;, &#x22;g&#x22;);
+
+        if (isStream) {
+            return callback(new Error(&#x27;gulp-strip-code: Streaming not supported&#x27;), file);
+        }
+
+        if (isBuffer) {
+            if(options.keep_comments){
+                file.contents = new Buffer(String(file.contents).replace(pattern, &#x22;$1\n$2&#x22;));
+            }
+            else{
+                file.contents = new Buffer(String(file.contents).replace(pattern, &#x22;&#x22;));
+            }
+            return callback(null, file);
+        }
+
+        callback(null, file);
+    };
+
+    return es.map(doStrip);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
